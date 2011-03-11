@@ -1,0 +1,37 @@
+
+<table>
+	<tr>
+		<td class="vertical_topped_text">
+	<%- i=0
+	@prices.each() do |order| %>
+
+		<table>
+			<tr>
+				<td  class="centered_text">
+					<img src="/images/<%= @minerals_id_index[order.mineral_id] %>.png" alt="<%= @minerals_id_index[order.mineral_id] %>" /> <br />
+				</td>
+				<td class="old_price"><%= number_with_delimiter(order.base_price, :delimiter => " ", :separator => ",")%> ISK</td>
+				<td class="new_price"><%= number_with_delimiter(order.buy_price, :delimiter => " ", :separator => ",") %> ISK</td>
+				<td class="bonus_percent"> (+ <%= number_with_delimiter(order.corp_rise, :delimiter => " ", :separator => ",") %> %)</td>
+			</tr>
+			<tr>
+				<td><%= @minerals_id_index[order.mineral_id] %>&nbsp;</td>
+				<td colspan="3" style="text-align: center; border-width: 1px 0 0 0; border-style:solid;" >
+					x <%= number_with_delimiter(order.quantity, :delimiter => " ", :separator => ",") %> <span class="humanize_qty" >(<%= number_to_human(order.quantity)%>)</span> units
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4"><br /><br /></td>
+			</tr>
+		</table>
+		<%- if(i ==3) %>
+			</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			<td class="vertical_topped_text">
+		<% end -%>
+	<% i += 1
+	end -%>
+		</td>
+	</tr>
+</table>
+

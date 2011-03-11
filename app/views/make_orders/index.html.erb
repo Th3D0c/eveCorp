@@ -1,0 +1,38 @@
+<h1>Here come the prices of minerals  </h1>
+
+<%= form_tag do %>
+
+	<table style="text-align:center;">
+		<tr>
+			<td>Mineral</td>
+			<td>Reported Price</td>
+			<td>Corp. Price</td>
+			<td>Price rise %</td>
+			<td>Quantity</td>
+		</tr>
+
+		<% @price_infos.each() do |line| %>
+			<tr><td><%= line['name'] %></td>
+				<td><span id="base_price_<%= line['name'].downcase %>"><%= line['base_price'] %></span></td>
+				<td><span id="corp_price_<%= line['name'].downcase %>"><%= (1.05 * line['base_price'].to_f).round(2).to_s %></span></td>
+				<td><%= text_field_tag(line['name'].downcase+"[margin]", 5, :size => 3, :onKeyUp => "modifyPrice(this.value, '"+line['name'].downcase+"')") %>%</td>
+				<td><%= text_field_tag(line['name'].downcase+"[qty]", 100000, :size => 8) %></td>
+			</tr>
+			<%= hidden_field_tag(line['name'].downcase+"[base_price]", line['base_price'].to_f) %>
+			<%= hidden_field_tag(line['name'].downcase+"[final_price]", (1.05 * line['base_price'].to_f).round(2).to_s) %>
+		<% end %>
+	</table>
+	<%= submit_tag("save") %>
+
+
+<% end %>
+
+
+<%= javascript_tag do -%>
+	function modifyPrice(percent, line_name) {
+		$('corp_price_' + line_name).innerHTML = Math.round( ($('base_price_'+line_name).innerHTML * (1 + (percent/100))) *100 )/100;
+		$('final_price_' + line_name).value = Math.round( ($('base_price_'+line_name).innerHTML * (1 + (percent/100))) *100 )/100;
+
+	}
+<% end -%>
+
