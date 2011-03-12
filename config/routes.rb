@@ -1,4 +1,6 @@
 MineralsOrders::Application.routes.draw do
+  
+
 	resources :minerals
 	resources :make_orders
 #  get "minerals/index"
