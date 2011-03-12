@@ -1,7 +1,13 @@
 MineralsOrders::Application.routes.draw do
-  get "minerals/index"
+	resources :minerals
+	resources :make_orders
+#  get "minerals/index"
+#  post "minerals/index"
+#  get "make_orders/index"
+#  post "make_orders/index"
 
-  get "make_orders/index"
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
