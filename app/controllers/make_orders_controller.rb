@@ -13,26 +13,32 @@ class MakeOrdersController < ApplicationController
 			39 => 'Zydrine',
 			40 => 'Megacyte'
 		}
-
-		def index
-			# Zone de sauvegarde du formulaire
+		
+		# Zone de sauvegarde du formulaire
+		def create			
 			if(params['authenticity_token'] != nil)
 				@@minerals.each() { |minid, mineral|
 					if(minid != 11399)
-						mineral_save = Minerals_transaction.new()
+						mineral_save = MineralsTransaction.new()
 						mineral_save.mineral_id = minid
 						mineral_save.buy_price = params[mineral.downcase]['final_price']
 						mineral_save.base_price = params[mineral.downcase]['base_price']
 						mineral_save.corp_rise = params[mineral.downcase]['margin']
 						mineral_save.quantity = params[mineral.downcase]['qty']
 						mineral_save.created_at = Time.now
-						mineral_save.updated_at = Time.now
-						mineral_save.save
+						mineral_save.updated_at = Time.now						
 						puts(mineral_save)
+						mineral_save.save
+						redirect_to(:index)
+#						if(mineral_save.save) 
+#							redirect_to('/make_orders')
+#						end
 					end
 				}
 			end
+		end
 
+		def index
 		 	xmlfile = File.new('public/market.xml')
 		 	xmldoc = Document.new(xmlfile)
 	#		content = Net::HTTP.get(URI.parse("http://api.eve-central.com/api/marketstat?typeid=34&typeid=35&typeid=36&typeid=37&typeid=38&typeid=39&typeid=40&regionlimit=10000042&regionlimit=10000030"));

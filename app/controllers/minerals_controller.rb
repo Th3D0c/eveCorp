@@ -12,7 +12,7 @@ class MineralsController < ApplicationController
 			40 => 'Megacyte'
 		}
 
-		mineral_save = Minerals_transaction.new()
+		mineral_save = MineralsTransaction.new()
 		@prices = mineral_save.getLastMineralsPrice()
   end
 
