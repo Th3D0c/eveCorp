@@ -1,8 +1,11 @@
 MineralsOrders::Application.routes.draw do
   
 
+  
+	resources :perso
 	resources :minerals
 	resources :make_orders
+#	get "perso/index"
 #  get "minerals/index"
 #  post "minerals/index"
 #  get "make_orders/index"

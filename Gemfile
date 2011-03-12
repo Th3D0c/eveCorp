@@ -7,6 +7,7 @@ gem 'rails', '3.0.3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
+gem 'eaal', :require => 'active_support', :require => 'memcache-client', :require => 'hpricot'
 # Use unicorn as the web server
 # gem 'unicorn'
 
