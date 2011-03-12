@@ -27,12 +27,11 @@ class MakeOrdersController < ApplicationController
 						mineral_save.quantity = params[mineral.downcase]['qty']
 						mineral_save.created_at = Time.now
 						mineral_save.updated_at = Time.now						
-						puts(mineral_save)
-						mineral_save.save
-						redirect_to(:index)
-#						if(mineral_save.save) 
-#							redirect_to('/make_orders')
-#						end
+						if(mineral_save.save) 
+							redirect_to('/make_orders')
+							puts(mineral_save)
+							return #Important pour redirect_to !!!
+						end
 					end
 				}
 			end
