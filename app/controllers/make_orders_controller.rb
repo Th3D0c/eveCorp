@@ -38,10 +38,10 @@ class MakeOrdersController < ApplicationController
 		end
 
 		def index
-		 	xmlfile = File.new('public/market.xml')
-		 	xmldoc = Document.new(xmlfile)
-	#		content = Net::HTTP.get(URI.parse("http://api.eve-central.com/api/marketstat?typeid=34&typeid=35&typeid=36&typeid=37&typeid=38&typeid=39&typeid=40&regionlimit=10000042&regionlimit=10000030"));
-	#		xmldoc = Document.new(content)
+#		 	xmlfile = File.new('public/market.xml')
+#		 	xmldoc = Document.new(xmlfile)
+			content = Net::HTTP.get(URI.parse("http://api.eve-central.com/api/marketstat?typeid=34&typeid=35&typeid=36&typeid=37&typeid=38&typeid=39&typeid=40&regionlimit=10000042&regionlimit=10000030"));
+			xmldoc = Document.new(content)
 
 			@display_table = String.new
 			@price_infos = Array.new

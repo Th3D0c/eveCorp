@@ -1,2 +1,35 @@
 <h1>Perso#index</h1>
 <p>Find me in app/views/perso/index.html.erb</p>
+
+<h1><%=@characterSheat.name %></h1>
+
+<div style="position: relative; float: left;">
+
+
+<%=image_tag("http://image.eveonline.com/Character/"+@characterSheat.characterID+"_256.jpg")%>
+</div>
+
+<div>
+<h1><%=@characterSheat.name %></h1>
+<%=image_tag("http://image.eveonline.com/Corporation/"+@characterSheat.corporationID+"_128.png")%>
+<%=@characterSheat.corporationName %><br/>
+Balance : <%=@characterSheat.balance %><br/>
+Total SP: <%=@characterSheat.skillsPoints %><br/>
+Max Clone SP: <%=@characterSheat.cloneSkillPoints %><br/>
+
+
+<%- @characterSheat.attributes.instance_variable_get("@table").each()  do |att , rank| %>
+	<%=att.to_s + ': ' + rank.to_s %>
+<% end -%>
+</div>
+<br/><br/><br/>
+<h2>Skills :</h2>
+
+<%- @characterSheat.skills.each()  do |i, skill| %>
+	
+	<%=image_tag("Types/" + skill.typeID + "_64.png")%>
+	<%= skill.typeID.to_s %> : <%= skill.level.to_s %> <em>(SP: <%= skill.skillpoints.to_s %> pts)</em> <br/>
+	
+<% end -%>
+
+
