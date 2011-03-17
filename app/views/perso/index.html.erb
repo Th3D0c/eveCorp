@@ -14,22 +14,42 @@
 <%=image_tag("http://image.eveonline.com/Corporation/"+@characterSheat.corporationID+"_128.png")%>
 <%=@characterSheat.corporationName %><br/>
 Balance : <%=@characterSheat.balance %><br/>
-Total SP: <%=@characterSheat.skillsPoints %><br/>
+Total SP: <% %><br/>
 Max Clone SP: <%=@characterSheat.cloneSkillPoints %><br/>
 
 
-<%- @characterSheat.attributes.instance_variable_get("@table").each()  do |att , rank| %>
-	<%=att.to_s + ': ' + rank.to_s %>
-<% end -%>
-</div>
-<br/><br/><br/>
-<h2>Skills :</h2>
 
-<%- @characterSheat.skills.each()  do |i, skill| %>
+<ul>
+	<%- @skillTree.skillGroups.each()  do |skillGroups| %>
+		
+		<li><span onclick="toogleGroup('<%=skillGroups.groupName%>');">-<%= skillGroups.groupName %> <em>(<%= skillGroups.groupID %> )</em> </span>
+			<ul id="<%=skillGroups.groupName%>" style="display: none" >
+				<%- skillGroups.skills.each()  do |skill| %>
+					
+					<li>
+						<%=image_tag("Types/11584_32.png")%>
+						<span>
+							<%=  skill.typeName %> <em>( <%= skill.typeID %> )</em> <br/>
+							Level 1 <br/>
+							To lvl 2 : 4d 16h 3min 36s 
+						</span>
+					</li>
+					
+				<% end -%>
+			</ul>
+		</li>	
+	<% end -%>
+</ul>
+<%- @characterSheat.skills.each()  do |skill| %>
 	
 	<%=image_tag("Types/" + skill.typeID + "_64.png")%>
-	<%= skill.typeID.to_s %> : <%= skill.level.to_s %> <em>(SP: <%= skill.skillpoints.to_s %> pts)</em> <br/>
+	<%= skill.typeID %> : <%= skill.level %> <em>(SP: <%= skill.skillpoints %> pts)</em> <br/>
 	
 <% end -%>
 
-
+<%= javascript_tag :defer => 'defer' do -%>
+	function toogleGroup(group) {
+		$(group).toggle();
+		
+	}
+<% end -%>
