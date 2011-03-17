@@ -16,30 +16,73 @@
 Balance : <%=@characterSheat.balance %><br/>
 Total SP: <% %><br/>
 Max Clone SP: <%=@characterSheat.cloneSkillPoints %><br/>
+<br/><br/><br/>
 
 
+SkillTree :
 
 <ul>
-	<%- @skillTree.skillGroups.each()  do |skillGroups| %>
+<%- @skillTree.skillGroups.each()  do |skillGroups| %>
+	
+	<li><span onclick="toogleGroup('<%=skillGroups.groupName%>');">-<%= skillGroups.groupName %> <em>(<%= skillGroups.groupID %> )</em> </span>
 		
-		<li><span onclick="toogleGroup('<%=skillGroups.groupName%>');">-<%= skillGroups.groupName %> <em>(<%= skillGroups.groupID %> )</em> </span>
-			<ul id="<%=skillGroups.groupName%>" style="display: none" >
-				<%- skillGroups.skills.each()  do |skill| %>
-					
-					<li>
-						<%=image_tag("Types/11584_32.png")%>
-						<span>
-							<%=  skill.typeName %> <em>( <%= skill.typeID %> )</em> <br/>
-							Level 1 <br/>
-							To lvl 2 : 4d 16h 3min 36s 
-						</span>
-					</li>
-					
-				<% end -%>
-			</ul>
-		</li>	
-	<% end -%>
+		<ul id="<%=skillGroups.groupName%>" style="display: none" >
+		<%- skillGroups.skills.each()  do |skill| %>
+			
+			
+			<% if(@knownSkills[skill.typeID.to_i].nil?)%>
+					<li id="unknown" style="display: none">
+				<% else %>
+					<li id="known">
+				<% end %>
+			
+				<%=image_tag("Types/11584_32.png")%>
+				<span>
+					<%=  skill.typeName %> <em>( <%= skill.typeID %> )</em> <br/>
+					Level <%=@knownSkills[skill.typeID.to_i]%> <br/>
+					To lvl <%=@knownSkills[skill.typeID.to_i].to_i + 1%>: 4d 16h 3min 36s 
+				</span>
+			</li>
+			
+		<% end -%>
+		</ul>
+	</li>	
+<% end -%>
 </ul>
+
+SkillTree :<br/>
+<ul>
+<%- @skillTree.skillGroups.each()  do |skillGroups| %>
+	
+	<li><span onclick="toogleGroup('st_<%=skillGroups.groupName%>');">-<%= skillGroups.groupName %> <em>(<%= skillGroups.groupID %> )</em> </span>
+		<ul id="st_<%=skillGroups.groupName%>" style="display: none" >
+		<%- skillGroups.skills.each()  do |skill| %>
+			
+			<li>
+				<%=image_tag("Types/11584_32.png")%>
+				<span>
+					<%=  skill.typeName %> <em>( <%= skill.typeID %> )</em> <br/>
+					Level 1 <br/>
+					To lvl 2 : 4d 16h 3min 36s 
+				</span>
+			</li>
+			
+		<% end -%>
+		</ul>
+	</li>	
+<% end -%>
+</ul>
+
+
+Training Queue :<br/>
+<ul>
+<%- @skillQueue.skillqueue.each()  do |skill| %>
+	<li><%=@skillNames[skill.typeID.to_i]+' - '+skill.level+' - '+skill.endTime%></li>
+<% end -%>
+</ul>
+
+
+
 <%- @characterSheat.skills.each()  do |skill| %>
 	
 	<%=image_tag("Types/" + skill.typeID + "_64.png")%>
@@ -49,7 +92,7 @@ Max Clone SP: <%=@characterSheat.cloneSkillPoints %><br/>
 
 <%= javascript_tag :defer => 'defer' do -%>
 	function toogleGroup(group) {
-		$(group).toggle();
+		new Effect.toggle(group, 'blind');
 		
 	}
 <% end -%>
