@@ -1,18 +1,12 @@
 MineralsOrders::Application.routes.draw do
-  
 
-  
 	resources :perso
 	resources :minerals
 	resources :make_orders
-#	get "perso/index"
-#  get "minerals/index"
-#  post "minerals/index"
-#  get "make_orders/index"
-#  post "make_orders/index"
-
-
-
+	namespace :tools do
+		resources :missions_types
+		resources :invention_math
+	end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

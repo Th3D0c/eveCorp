@@ -1,46 +1,52 @@
-<h1>Perso#index</h1>
-<p>Find me in app/views/perso/index.html.erb</p>
-
-<h1><%=@characterSheat.name %></h1>
 
 <div style="position: relative; float: left;">
-
-
-<%=image_tag("http://image.eveonline.com/Character/"+@characterSheat.characterID+"_256.jpg")%>
+	<%=image_tag("http://image.eveonline.com/Character/"+@characterSheat.characterID+"_256.jpg")%>
 </div>
 
 <div>
-<h1><%=@characterSheat.name %></h1>
-<%=image_tag("http://image.eveonline.com/Corporation/"+@characterSheat.corporationID+"_128.png")%>
-<%=@characterSheat.corporationName %><br/>
-Balance : <%=@characterSheat.balance %><br/>
-Total SP: <% %><br/>
-Max Clone SP: <%=@characterSheat.cloneSkillPoints %><br/>
-<br/><br/><br/>
+	<h1><%=@characterSheat.name %></h1>
+	<%=image_tag("http://image.eveonline.com/Corporation/"+@characterSheat.corporationID+"_128.png")%>
+	<%=@characterSheat.corporationName %><br/>
+	Balance : <%= number_with_delimiter(@characterSheat.balance,  :delimiter => " ", :separator => ".") %> ISK <br/>
+	Total SP: <%= number_with_delimiter(@total_skills_pts,  :delimiter => " ", :separator => ".") %><br/>
+	Max Clone SP: <%= @characterSheat.cloneName %>
+	<%= number_with_delimiter(@characterSheat.cloneSkillPoints,  :delimiter => " ", :separator => ".") %>
+</div>
+<br/>
 
 
-SkillTree :
 
 <ul>
-<%- @skillTree.skillGroups.each()  do |skillGroups| %>
-	
-	<li><span onclick="toogleGroup('<%=skillGroups.groupName%>');">-<%= skillGroups.groupName %> <em>(<%= skillGroups.groupID %> )</em> </span>
+	<li style="display: inline;"> <%=image_tag("Icons/items/32_32/icon60_03.png")%>Intelligence		<%= @characterSheat.attributes.intelligence %></li>
+	<li style="display: inline;"> <%=image_tag("Icons/items/32_32/icon60_02.png")%>Perception		<%= @characterSheat.attributes.perception %></li>
+	<li style="display: inline;"> <%=image_tag("Icons/items/32_32/icon61_01.png")%>Charisma			<%= @characterSheat.attributes.charisma %></li>
+	<br/>
+	<li style="display: inline;"> <%=image_tag("Icons/items/32_32/icon60_01.png")%>Willpower		<%= @characterSheat.attributes.willpower %></li>
+	<li style="display: inline;"> <%=image_tag("Icons/items/32_32/icon60_04.png")%>Memory			<%= @characterSheat.attributes.memory %></li>
+</ul>
+
+Training Queue :<br/>
+<ul>
+<%- @skillQueue.skillqueue.each()  do |skill| %>
+	<li><%=image_tag("Types/11584_32.png")%><%=@skillNames[skill.typeID.to_i]+' - '+skill.level+' - '+skill.endTime%></li>
+<% end -%>
+</ul>
+
+
+Known skills :
+<ul>
+<%- @aaaa.each()  do |skillGroups, skills| %>	
+	<li><span onclick="toogleGroup('<%=skillGroups%>');">-<%= skillGroups%> </span>		
+		<ul id="<%=skillGroups%>" style="display: none" >
 		
-		<ul id="<%=skillGroups.groupName%>" style="display: none" >
-		<%- skillGroups.skills.each()  do |skill| %>
+		<%- skills.each()  do |skill_id, skill_name| %>
 			
-			
-			<% if(@knownSkills[skill.typeID.to_i].nil?)%>
-					<li id="unknown" style="display: none">
-				<% else %>
-					<li id="known">
-				<% end %>
-			
+			<li id="known">
 				<%=image_tag("Types/11584_32.png")%>
 				<span>
-					<%=  skill.typeName %> <em>( <%= skill.typeID %> )</em> <br/>
-					Level <%=@knownSkills[skill.typeID.to_i]%> <br/>
-					To lvl <%=@knownSkills[skill.typeID.to_i].to_i + 1%>: 4d 16h 3min 36s 
+					<%=  skill_name %> <em>( <%= skill_id %> )</em> <br/>
+					Level <%=@knownSkills[skill_id.to_i]%> <br/>
+					To lvl <%=@knownSkills[skill_id.to_i].to_i + 1%>: 4d 16h 3min 36s 
 				</span>
 			</li>
 			
@@ -50,6 +56,8 @@ SkillTree :
 <% end -%>
 </ul>
 
+
+<!---------------------------
 SkillTree :<br/>
 <ul>
 <%- @skillTree.skillGroups.each()  do |skillGroups| %>
@@ -74,21 +82,18 @@ SkillTree :<br/>
 </ul>
 
 
-Training Queue :<br/>
-<ul>
-<%- @skillQueue.skillqueue.each()  do |skill| %>
-	<li><%=@skillNames[skill.typeID.to_i]+' - '+skill.level+' - '+skill.endTime%></li>
-<% end -%>
-</ul>
-
-
-
 <%- @characterSheat.skills.each()  do |skill| %>
 	
 	<%=image_tag("Types/" + skill.typeID + "_64.png")%>
 	<%= skill.typeID %> : <%= skill.level %> <em>(SP: <%= skill.skillpoints %> pts)</em> <br/>
 	
 <% end -%>
+
+-->
+
+
+
+
 
 <%= javascript_tag :defer => 'defer' do -%>
 	function toogleGroup(group) {
